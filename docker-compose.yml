@@ -1,0 +1,6 @@
+services:
+  employeenotifier:
+    image: ${DOCKER_REGISTRY-}employeenotifier
+    build:
+      context: .
+      dockerfile: EmployeeNotifier\Dockerfile

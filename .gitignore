@@ -1,0 +1,40 @@
+# Binaries and Object Files
+
+\[Dd\]ebug/
+\[Rr\]elease/
+\[Bb\]in/
+\[Oo\]bj/
+\*.exe
+\*.dll
+\*.pdb
+\*.suo
+\*.user
+
+# Packages and Dependencies
+
+# NuGet packages
+
+packages/
+
+# Node.js
+
+node_modules/
+
+# Dapr local state and logs (if any were created in the solution root)
+
+.dapr/
+dapr.log
+dapr.err
+
+# IDE files (Visual Studio, Rider)
+
+.vs/
+\*.sln.docstates
+\*.vsp
+\*.tmp
+
+# Docker specific
+
+# Ignore the volumes created by docker-compose
+
+.docker/
