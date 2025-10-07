@@ -1,4 +1,7 @@
 services:
+  # -----------------------------------------------------------------
+  #  SUBSRIBER SERVICE (EmployeeNotifierSolu)
+  # -----------------------------------------------------------------
   employeenotifier:
     image: ${DOCKER_REGISTRY-}employeenotifier
     build:
