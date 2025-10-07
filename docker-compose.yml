@@ -4,3 +4,23 @@ services:
     build:
       context: .
       dockerfile: EmployeeNotifier\Dockerfile
+    networks:
+      - dapr-network
+  
+  employeenotifier-dapr:
+    image: "daprio/dapr:1.16.0" 
+    container_name: employeenotifier_dapr_container
+    network_mode: service:employeenotifier
+    command: [
+      "/daprd",
+      "-app-id", "employeenotifier",
+      "-app-port", "8080",
+      "-resources-path", "/app"
+    ]
+    volumes:
+      - ./notifier-pubsub.yaml:/app/notifier-pubsub.yaml
+
+networks:
+  dapr-network:
+    external: true
+    name: dapr-pubsub-network

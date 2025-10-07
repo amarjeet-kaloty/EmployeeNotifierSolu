@@ -1,0 +1,54 @@
+name: dockercompose8913207257293444922
+services:
+  employeenotifier:
+    build:
+      context: C:\Users\amarj\source\repos\EmployeeNotifierSolu
+      dockerfile: EmployeeNotifier\Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+      ASPNETCORE_HTTPS_PORTS: "8081"
+    image: employeenotifier
+    networks:
+      dapr-network: null
+    ports:
+      - mode: ingress
+        target: 8080
+        protocol: tcp
+      - mode: ingress
+        target: 8081
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: C:\Users\amarj\AppData\Roaming/Microsoft/UserSecrets
+        target: /home/app/.microsoft/usersecrets
+        read_only: true
+        bind:
+          create_host_path: true
+  employeenotifier-dapr:
+    command:
+      - /daprd
+      - -app-id
+      - employeenotifier
+      - -app-port
+      - "8080"
+      - -resources-path
+      - /app
+    container_name: employeenotifier_dapr_container
+    depends_on:
+      employeenotifier:
+        condition: service_started
+        restart: true
+        required: true
+    image: daprio/dapr:1.16.0
+    network_mode: service:employeenotifier
+    volumes:
+      - type: bind
+        source: C:\Users\amarj\source\repos\EmployeeNotifierSolu\notifier-pubsub.yaml
+        target: /app/notifier-pubsub.yaml
+        bind:
+          create_host_path: true
+networks:
+  dapr-network:
+    name: dapr-pubsub-network
+    external: true

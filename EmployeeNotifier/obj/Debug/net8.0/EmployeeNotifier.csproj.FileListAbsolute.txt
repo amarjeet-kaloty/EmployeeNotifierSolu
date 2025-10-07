@@ -55,3 +55,4 @@ C:\Users\amarj\source\repos\EmployeeNotifierSolu\EmployeeNotifier\obj\Debug\net8
 C:\Users\amarj\source\repos\EmployeeNotifierSolu\EmployeeNotifier\obj\Debug\net8.0\EmployeeNotifier.pdb
 C:\Users\amarj\source\repos\EmployeeNotifierSolu\EmployeeNotifier\obj\Debug\net8.0\EmployeeNotifier.genruntimeconfig.cache
 C:\Users\amarj\source\repos\EmployeeNotifierSolu\EmployeeNotifier\obj\Debug\net8.0\ref\EmployeeNotifier.dll
+C:\Users\amarj\source\repos\EmployeeNotifierSolu\EmployeeNotifier\obj\Debug\net8.0\EmployeeNotifier.sourcelink.json
