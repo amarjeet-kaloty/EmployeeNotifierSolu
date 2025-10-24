@@ -38,3 +38,15 @@ dapr.err
 # Ignore the volumes created by docker-compose
 
 .docker/
+
+# Visual Studio/Build Folders
+[Bb]in/
+[Oo]bj/
+
+# Docker Cache files and specific cache files
+**/*.cache
+
+# Other common VS/User files
+.vs/
+*.user
+*.suo
