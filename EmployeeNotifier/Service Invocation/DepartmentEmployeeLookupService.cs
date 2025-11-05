@@ -1,7 +1,7 @@
 ﻿using Dapr.Client;
 using EmployeeNotifier.DTOs;
 
-namespace EmployeeNotifier.Controllers
+namespace EmployeeNotifier.Service_Invocation
 {
     public class DepartmentEmployeeLookupService
     {
@@ -21,20 +21,26 @@ namespace EmployeeNotifier.Controllers
         /// </summary>
         /// <param name="employeeId">The unique identifier of the employee to retrieve.</param>
         /// <returns>The full employee DTO, or null if not found.</returns>
-        public async Task<ReadEmployeeDTO> GetEmployeeDetails(Guid employeeId)
+        public async Task<ReadEmployeeDTO> GetEmployeeDetails(string employeeId, string? userToken)
         {
             string methodPath = $"api/Employee/{employeeId}";
 
             try
             {
-                _logger.LogDebug("Delegating employee detail query to App ID '{ManagementAppId}' at path '{MethodPath}' for ID: {EmployeeId}",
-                    ManagementAppId, methodPath, employeeId);
+                _logger.LogInformation($"Delegating employee detail query to App ID '{ManagementAppId}' at path '{methodPath}' for ID: {employeeId}");
 
-                return await _daprClient.InvokeMethodAsync<ReadEmployeeDTO>(
-                    ManagementAppId,
-                    methodPath);
+                var httpClient = _daprClient.CreateInvokableHttpClient(ManagementAppId);
+                var request = new HttpRequestMessage(HttpMethod.Get, methodPath);
+
+                if (!string.IsNullOrEmpty(userToken))
+                { 
+                    request.Headers.Add("Authorization", userToken);
+                }
+
+                var response = await httpClient.SendAsync(request, CancellationToken.None);
+                return await response.Content.ReadFromJsonAsync<ReadEmployeeDTO>(cancellationToken: CancellationToken.None);
             }
-            catch (InvocationException ex)
+            catch (InvocationException)
             {
                 _logger.LogWarning("Employee ID {EmployeeId} not found in Management Service (404 response).", employeeId);
                 return null!;
