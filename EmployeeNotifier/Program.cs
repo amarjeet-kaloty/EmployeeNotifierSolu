@@ -1,4 +1,3 @@
-using EmployeeNotifier.Service_Invocation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
@@ -6,8 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDaprClient();
 builder.Services.AddControllers().AddDapr();
-
-builder.Services.AddScoped<DepartmentEmployeeLookupService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
